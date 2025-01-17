@@ -1,0 +1,54 @@
+<MainScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'mainbackground.jpg'  
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        Label:
+            text: "Hit the Seal-_-"
+            font_size: 50
+            size_hint: 1, 0.2
+            color: 1, 0, 1, 1 
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        Button:
+            text: "Start Game"
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            on_press: app.root.current = 'game'
+
+<GameScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'during_game_background.jpg'  
+            size: self.size
+            pos: self.pos
+    FloatLayout:
+        Label:
+            text: "Game Screen"
+            font_size: 24
+            size_hint: 1, 0.2
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        Button:
+            text: "Go to End Screen"
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            on_press: app.root.current = 'end'
+
+<EndScreen>:
+    FloatLayout:
+        Label:
+            text: "Game Over"
+            font_size: 32
+            size_hint: 1, 0.2
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+        Button:
+            text: "Play Again"
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            on_press: app.root.current = 'game'
+        Button:
+            text: "Exit"
+            size_hint: 0.3, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            on_press: app.stop()
