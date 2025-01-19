@@ -1,4 +1,3 @@
-
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
@@ -9,7 +8,6 @@ from kivy.uix.floatlayout import FloatLayout
 
 class MainScreen(Screen):
     pass
-
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
@@ -51,7 +49,6 @@ class HitTheSealApp(App):
         sm.add_widget(GameScreen(name='game'))
         sm.add_widget(EndScreen(name='end'))
         return sm
-
 
 if __name__ == '__main__':
     HitTheSealApp().run()

@@ -24,6 +24,12 @@
             size: self.size
             pos: self.pos
     FloatLayout:
+        Label:
+            text: "Game Screen"
+            font_size: 24
+            size_hint: 1, 0.2
+            color : 255, 228, 196, 1
+            pos_hint: {"center_x": 0.5, "center_y": 0.9}
         Button:
             text: "Leave"
             size_hint: 0.3, 0.1
@@ -38,13 +44,14 @@
             pos: self.pos
     FloatLayout:
         Button:
-            text: "Play Again"
-            size_hint: 0.3, 0.1
+            background_normal: 'play_again_button.png'  
+            background_down: 'play_again_button_pressed.png'  
+            size_hint: 0.3, 0.2
             pos_hint: {"center_x": 0.2, "center_y": 0.2}
             on_press: app.root.current = 'game'
         Button:
-            text: "Exit"
-            size_hint: 0.3, 0.1
+            background_normal: 'exit_button.png'  
+            background_down: 'exit_button_pressed.png'  
+            size_hint: 0.3, 0.2
             pos_hint: {"center_x": 0.8, "center_y": 0.2}
             on_press: app.stop()
-
