@@ -9,6 +9,7 @@ from kivy.uix.floatlayout import FloatLayout
 class MainScreen(Screen):
     pass
 
+
 class GameScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -17,7 +18,8 @@ class GameScreen(Screen):
             text = f"Time Left: {self.time_left} s",
             font_size = 24,
             size_hint = (1, 0.2),
-            pos_hint = {"center_x": 0.5, "center_y": 0.9},)
+            color = (255, 228, 196, 1) ,
+            pos_hint = {"center_x": 0.5, "center_y": 0.8},)
         layout = FloatLayout()
         layout.add_widget(self.timer_label)
         self.add_widget(layout)
@@ -49,6 +51,19 @@ class HitTheSealApp(App):
         sm.add_widget(GameScreen(name='game'))
         sm.add_widget(EndScreen(name='end'))
         return sm
+    def play_again(self):
+        #add delay 0.5 sec before change screeen
+        Clock.schedule_once(self.switch_to_game, 0.5)
+
+    def switch_to_game(self, dt):
+        self.root.current = 'game'
+
+    def exit_game(self):
+        #add delay 0.5 sec before close this program
+        Clock.schedule_once(self.stop_app, 0.5)
+
+    def stop_app(self, dt):
+        self.stop()
 
 if __name__ == '__main__':
     HitTheSealApp().run()
