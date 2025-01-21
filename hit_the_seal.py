@@ -58,12 +58,12 @@ class HitTheSealApp(App):
     def switch_to_game(self, dt):
         self.root.current = 'game'
 
-    def exit_game(self):
-        #add delay 0.5 sec before close this program
-        Clock.schedule_once(self.stop_app, 0.5)
+    def back_to_main(self):
+        #add delay 0.5 sec before go back to main 
+        Clock.schedule_once(self.switch_to_main, 0.5)
 
-    def stop_app(self, dt):
-        self.stop()
+    def switch_to_main(self, dt):
+        self.root.current = 'main'
 
 if __name__ == '__main__':
     HitTheSealApp().run()
