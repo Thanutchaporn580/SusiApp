@@ -14,8 +14,13 @@
         Button:
             text: "Start Game"
             size_hint: 0.3, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
             on_press: app.root.current = 'game' #callback
+        Button:
+            text: "Exit"
+            size_hint: 0.2, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.1}
+            on_press: app.stop()  #callback for exit
 
 <GameScreen>:
     canvas.before:
@@ -54,5 +59,5 @@
             background_down: 'exit_button_pressed.png'  
             size_hint: 0.3, 0.2
             pos_hint: {"center_x": 0.8, "center_y": 0.2}
-            on_press: app.exit_game()
+            on_press: app.back_to_main()
             
