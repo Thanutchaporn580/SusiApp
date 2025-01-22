@@ -10,17 +10,110 @@
             font_size: 50
             size_hint: 1, 0.2
             color: 1, 0, 1, 1
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
         Button:
             text: "Start Game"
             size_hint: 0.3, 0.1
             pos_hint: {"center_x": 0.5, "center_y": 0.2}
-            on_press: app.root.current = 'game' #callback
+            on_press: app.root.current = 'rules' 
         Button:
             text: "Exit"
             size_hint: 0.2, 0.1
             pos_hint: {"center_x": 0.5, "center_y": 0.1}
             on_press: app.stop()  #callback for exit
+
+<RulesGameScreen>:
+    FloatLayout:
+        Label:
+            text: "Tips for getting started"
+            font_size: 40
+            size_hint: 0.5, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.9}
+        Label:
+            text: "1. You have a limited time to complete each level\n\nby hit the seals according to the levels specified.\n\n2. Each level gets progressively harder.\n\n3. Good luck and Enjoy!"
+            font_size: 30
+            size_hint: 0.5, 0.4
+            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+        Button:
+            text: "Select Level"
+            font_size: 24
+            size_hint: 0.2, 0.1
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            on_press: app.root.current = 'choose_level'
+
+<LevelScreen>:
+    FloatLayout:
+        Button:
+            text: "Level 1"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.1, "y": 0.7}
+            on_press:
+                app.root.get_screen('game').level = 1
+                app.root.current = 'game'
+        Button:
+            text: "Level 2"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.4, "y": 0.7}
+            on_press:
+                app.root.get_screen('game').level = 2
+                app.root.current = 'game'
+        Button:
+            text: "Level 3"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.7, "y": 0.7}
+            on_press:
+                app.root.get_screen('game').level = 3
+                app.root.current = 'game'
+        Button:
+            text: "Level 4"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.1, "y": 0.5}
+            on_press:
+                app.root.get_screen('game').level = 4
+                app.root.current = 'game'      
+        Button:
+            text: "Level 5"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.4, "y": 0.5}
+            on_press:
+                app.root.get_screen('game').level = 5
+                app.root.current = 'game'
+        Button:
+            text: "Level 6"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.7, "y": 0.5}
+            on_press:
+                app.root.get_screen('game').level = 6
+                app.root.current = 'game'
+        Button:
+            text: "Level 7"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.1, "y": 0.3}
+            on_press:
+                app.root.get_screen('game').level = 7
+                app.root.current = 'game'
+        Button:
+            text: "Level 8"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.4, "y": 0.3}
+            on_press:
+                app.root.get_screen('game').level = 8
+                app.root.current = 'game'
+        Button:
+            text: "Level 9"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.7, "y": 0.3}
+            on_press:
+                app.root.get_screen('game').level = 9
+                app.root.current = 'game'
+        Button:
+            text: "Level 10"
+            size_hint: 0.2, 0.1
+            pos_hint: {"x": 0.4, "y": 0.1}
+            on_press:
+                app.root.get_screen('game').level = 10
+                app.root.current = 'game'
+
 
 <GameScreen>:
     canvas.before:
@@ -33,7 +126,7 @@
             text: "Game Screen"
             font_size: 24
             size_hint: 1, 0.2
-            color : 255, 228, 196, 1
+            color : 1, 0.89, 0.77, 1
             pos_hint: {"center_x": 0.5, "center_y": 0.9}
         Button:
             text: "Leave"
