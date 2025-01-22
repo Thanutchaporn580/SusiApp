@@ -9,6 +9,11 @@ from kivy.uix.floatlayout import FloatLayout
 class MainScreen(Screen):
     pass
 
+class RulesGameScreen(Screen):
+    pass
+
+class LevelScreen(Screen):
+    pass
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
@@ -18,7 +23,7 @@ class GameScreen(Screen):
             text = f"Time Left: {self.time_left} s",
             font_size = 24,
             size_hint = (1, 0.2),
-            color = (255, 228, 196, 1) ,
+            color = (1, 0.89, 0.77, 1) ,
             pos_hint = {"center_x": 0.5, "center_y": 0.8},)
         layout = FloatLayout()
         layout.add_widget(self.timer_label)
@@ -38,6 +43,11 @@ class GameScreen(Screen):
             Clock.unschedule(self.event)  #stop
             self.manager.current = 'end'  #go to EndScreen
 
+    def choose_level(self):
+        Clock.schedule_once(self.switch_to_level_select, 0.5)
+
+    def switch_to_level_up(self, dt):
+        self.root.current = 'level_select'
 
 class EndScreen(Screen):
     pass
@@ -48,9 +58,12 @@ class HitTheSealApp(App):
         Builder.load_file('hit_the_seal.kv')
         sm = ScreenManager()
         sm.add_widget(MainScreen(name='main'))
+        sm.add_widget(RulesGameScreen(name='rules'))
+        sm.add_widget(LevelScreen(name='choose_level'))
         sm.add_widget(GameScreen(name='game'))
         sm.add_widget(EndScreen(name='end'))
         return sm
+    
     def play_again(self):
         #add delay 0.5 sec before change screeen
         Clock.schedule_once(self.switch_to_game, 0.5)
