@@ -23,23 +23,30 @@
             on_press: app.stop()  #callback for exit
 
 <RulesGameScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'rulespage.png'
+            size: self.size
+            pos: self.pos
     FloatLayout:
         Label:
             text: "Tips for getting started"
             font_size: 40
-            size_hint: 0.5, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.9}
+            size_hint: 0.5, 0.2
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
         Label:
-            text: "1. You have a limited time to complete each level\n\nby hit the seals according to the levels specified.\n\n2. Each level gets progressively harder.\n\n3. Good luck and Enjoy!"
+            text: "- You have a limited time to complete each level\n\nby hit the seals according to the levels specified.\n\n- Each level gets progressively harder.\n\n- Good luck and Enjoy!"
             font_size: 30
-            size_hint: 0.5, 0.4
-            pos_hint: {"center_x": 0.5, "center_y": 0.6}
+            size_hint: 0.5, 0.2
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
         Button:
             text: "Select Level"
             font_size: 24
+            color:  1, 0.5, 0.5, 1
             size_hint: 0.2, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            pos_hint: {"center_x": 0.5, "center_y": 0.1}
             on_press: app.root.current = 'choose_level'
+            
 
 <LevelScreen>:
     FloatLayout:
