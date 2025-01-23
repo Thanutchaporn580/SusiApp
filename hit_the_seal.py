@@ -5,7 +5,7 @@ from kivy.clock import Clock
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
 from kivy.core.audio import SoundLoader
-
+from kivy.uix.button import Button
 
 class MainScreen(Screen):
     pass
@@ -60,6 +60,15 @@ class GameScreen(Screen):
 class EndScreen(Screen):
     pass
 
+class CustomButton(Button):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.click_sound = SoundLoader.load('clicksound.mp3')
+
+    def on_press(self):
+        if self.click_sound:  
+            self.click_sound.play()  # play sound when press
+        return super().on_press()
 
 class HitTheSealApp(App):
     def build(self):
