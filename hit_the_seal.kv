@@ -49,6 +49,11 @@
             
 
 <LevelScreen>:
+    canvas.before:
+        Rectangle:
+            source: 'levelbackground.jpg'
+            size: self.size
+            pos: self.pos
     FloatLayout:
         Button:
             text: "Level 1"
