@@ -11,12 +11,12 @@
             size_hint: 1, 0.2
             color: 1, 0, 1, 1
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
-        Button:
+        CustomButton:
             text: "Start Game"
             size_hint: 0.3, 0.1
             pos_hint: {"center_x": 0.5, "center_y": 0.2}
             on_press: app.root.current = 'rules' 
-        Button:
+        CustomButton:
             text: "Exit"
             size_hint: 0.2, 0.1
             pos_hint: {"center_x": 0.5, "center_y": 0.1}
@@ -39,7 +39,7 @@
             font_size: 30
             size_hint: 0.5, 0.2
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-        Button:
+        CustomButton:
             text: "Select Level"
             font_size: 24
             color:  1, 0.5, 0.5, 1
@@ -55,70 +55,70 @@
             size: self.size
             pos: self.pos
     FloatLayout:
-        Button:
+        CustomButton:
             text: "Level 1"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.1, "y": 0.7}
             on_press:
                 app.root.get_screen('game').level = 1
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 2"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.4, "y": 0.7}
             on_press:
                 app.root.get_screen('game').level = 2
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 3"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.7, "y": 0.7}
             on_press:
                 app.root.get_screen('game').level = 3
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 4"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.1, "y": 0.5}
             on_press:
                 app.root.get_screen('game').level = 4
                 app.root.current = 'game'      
-        Button:
+        CustomButton:
             text: "Level 5"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.4, "y": 0.5}
             on_press:
                 app.root.get_screen('game').level = 5
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 6"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.7, "y": 0.5}
             on_press:
                 app.root.get_screen('game').level = 6
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 7"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.1, "y": 0.3}
             on_press:
                 app.root.get_screen('game').level = 7
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 8"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.4, "y": 0.3}
             on_press:
                 app.root.get_screen('game').level = 8
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 9"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.7, "y": 0.3}
             on_press:
                 app.root.get_screen('game').level = 9
                 app.root.current = 'game'
-        Button:
+        CustomButton:
             text: "Level 10"
             size_hint: 0.2, 0.1
             pos_hint: {"x": 0.4, "y": 0.1}
@@ -140,11 +140,12 @@
             size_hint: 1, 0.2
             color : 1, 0.89, 0.77, 1
             pos_hint: {"center_x": 0.5, "center_y": 0.9}
-        Button:
+        CustomButton:
             text: "Leave"
             size_hint: 0.3, 0.1
             pos_hint: {"center_x": 0.5, "center_y": 0.4}
             on_press: app.root.current = 'end'
+     
 
 <EndScreen>:
     canvas.before:
@@ -153,13 +154,13 @@
             size: self.size
             pos: self.pos
     FloatLayout:
-        Button:
+        CustomButton:
             background_normal: 'play_again_button.png'  
             background_down: 'play_again_button_pressed.png'  
             size_hint: 0.3, 0.2
             pos_hint: {"center_x": 0.2, "center_y": 0.2}
             on_press: app.play_again()
-        Button:
+        CustomButton:
             background_normal: 'exit_button.png'  
             background_down: 'exit_button_pressed.png'  
             size_hint: 0.3, 0.2
