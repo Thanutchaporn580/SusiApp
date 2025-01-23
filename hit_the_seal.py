@@ -4,6 +4,7 @@ from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.uix.label import Label
 from kivy.uix.floatlayout import FloatLayout
+from kivy.core.audio import SoundLoader
 
 
 class MainScreen(Screen):
@@ -18,7 +19,8 @@ class LevelScreen(Screen):
 class GameScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.time_left = 30  
+        self.time_up_sound = SoundLoader.load('breaktime.mp3') 
+        self.time_left = 30 
         self.timer_label = Label(
             text = f"Time Left: {self.time_left} s",
             font_size = 24,
@@ -40,8 +42,14 @@ class GameScreen(Screen):
         self.time_left -= 1
         self.timer_label.text = f"Time Left: {self.time_left} s"
         if self.time_left <= 0:
-            Clock.unschedule(self.event)  #stop
-            self.manager.current = 'end'  #go to EndScreen
+            Clock.unschedule(self.event) #stop
+            if self.time_up_sound:  # Check if the sound is loaded
+                self.time_up_sound.play()  # Play the sound
+                # Bind to the `on_stop` event to switch screens when sound finishes
+                self.time_up_sound.bind(on_stop=self.switch_to_end_screen)
+
+    def switch_to_end_screen(self, instance):
+        self.manager.current = 'end'
 
     def choose_level(self):
         Clock.schedule_once(self.switch_to_level_select, 0.5)
