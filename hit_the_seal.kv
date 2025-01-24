@@ -17,10 +17,16 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.2}
             on_press: app.root.current = 'rules' 
         CustomButton:
-            text: "Exit"
+            text: "Quit"
             size_hint: 0.2, 0.1
             pos_hint: {"center_x": 0.5, "center_y": 0.1}
             on_press: app.stop()  #callback for exit
+        CustomButton:
+            background_normal: 'setting_button.png'  
+            background_down: 'setting_button_pressed.png'  
+            size_hint: 0.3, 0.2
+            pos_hint: {"center_x": 0.8, "center_y": 0.6}
+            on_press: app.show_settings_popup()
 
 <RulesGameScreen>:
     canvas.before:
