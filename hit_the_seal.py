@@ -16,11 +16,11 @@ class MainScreen(Screen):
         super().__init__(**kwargs)
         self.background_music = SoundLoader.load('mainbackground_music.mp3')
         if self.background_music:
-            self.background_music.loop = False
-        self.background_music.bind(on_stop=self.play_music_again) # Bind on_stop event
-    
+            self.background_music.loop = False  # Disable looping
+            self.background_music.bind(on_stop=self.play_music_again)  # Bind on_stop event
+
     def on_enter(self):
-        if self.background_music:
+        if self.background_music and App.get_running_app().sound_enabled:
             self.background_music.play()  
 
     def on_leave(self):
@@ -28,7 +28,7 @@ class MainScreen(Screen):
             self.background_music.stop()
 
     def play_music_again(self, instance):
-        if self.manager.current == 'main':  # Check if still on the main screen
+        if self.manager.current == 'main' and App.get_running_app().sound_enabled:  # Check if still on the main screen and sound is enabled
             self.background_music.play()
 
 class RulesGameScreen(Screen):
@@ -160,12 +160,23 @@ class HitTheSealApp(App):
         sm.add_widget(EndScreen(name='end'))
         return sm
     
-    def toggle_sound(self):
+    def toggle_sound(self, button):
         self.sound_enabled = not self.sound_enabled
+        if self.sound_enabled:
+        # Enable sound
+            if self.root.current_screen.background_music:
+                self.root.current_screen.background_music.play()
+            button.text = "ON"
+        else:
+            # Disable sound
+            if self.root.current_screen.background_music:
+                self.root.current_screen.background_music.stop()
+            button.text = "OFF"
         print(f"Sound enabled: {self.sound_enabled}")
 
-    def toggle_effects(self):
+    def toggle_effects(self, button):
         self.effects_enabled = not self.effects_enabled
+        button.text = "ON" if self.effects_enabled else "OFF"
         print(f"Effects enabled: {self.effects_enabled}")
 
     def show_settings_popup(self):
@@ -186,13 +197,13 @@ class HitTheSealApp(App):
             text="ON" if self.sound_enabled else "OFF",
             size_hint=(0.2, 0.1),
             pos_hint={"x": 0.7, "y": 0.6},
-            on_press=lambda x: self.toggle_sound(),
+            on_press=lambda x: self.toggle_sound(sound_toggle),
         )
         effects_toggle = Button(
             text="ON" if self.effects_enabled else "OFF",
             size_hint=(0.2, 0.1),
             pos_hint={"x": 0.7, "y": 0.4},
-            on_press=lambda x: self.toggle_effects(),
+            on_press=lambda x: self.toggle_effects(effects_toggle),
         )
         close_button = Button(
             text="Close",
