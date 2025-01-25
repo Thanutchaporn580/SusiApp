@@ -68,6 +68,11 @@ class GameScreen(Screen):
             self.remove_widget(seal)
         self.seals.clear()
 
+    def leave_game(self):
+        end_screen = self.manager.get_screen('end')
+        end_screen.ids.final_score_label.text = f"Score: {self.score}"
+        self.manager.current = 'end'
+
     def update_timer(self, dt):
         self.time_left -= 1
         self.timer_label.text = f"Time Left: {self.time_left} s"
@@ -79,6 +84,8 @@ class GameScreen(Screen):
                 self.time_up_sound.bind(on_stop=self.switch_to_end_screen)
 
     def switch_to_end_screen(self, instance):
+        end_screen = self.manager.get_screen('end')
+        end_screen.ids.final_score_label.text = f"Score: {self.score}"
         self.manager.current = 'end'
 
     def choose_level(self):
