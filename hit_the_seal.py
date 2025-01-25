@@ -95,8 +95,8 @@ class GameScreen(Screen):
     def spawn_seal(self):
         seal = Image(source='seal.png', size_hint=(0.2, 0.2))
     # Define the safe area for spawning seals
-        safe_area_x = (0, int(self.width - seal.width))
-        safe_area_y = (int(self.height * 0.3), int(self.height * 0.7))  # Avoid top 30% and bottom 30%
+        safe_area_x = (int(self.width * 0.1), int(self.width * 0.9 - seal.width))
+        safe_area_y = (int(self.height * 0.3), int(self.height * 0.7 - seal.height))  # Avoid top 30% and bottom 30%
         seal.pos = (randint(*safe_area_x), randint(*safe_area_y))
         seal.bind(on_touch_down=self.hit_seal)  # Bind touch event to hit_seal function
         self.seals.append(seal)
@@ -104,8 +104,8 @@ class GameScreen(Screen):
         Clock.schedule_interval(partial(self.move_seal, seal), 2.0 / self.level)  # Increase the interval to slow down
     
     def move_seal(self, seal, dt):
-        safe_area_x = (0, int(self.width - seal.width))
-        safe_area_y = (int(self.height * 0.4), int(self.height * 0.7))  # Avoid top 40% and bottom 30%
+        safe_area_x = (int(self.width * 0.1), int(self.width * 0.9 - seal.width))
+        safe_area_y = (int(self.height * 0.3), int(self.height * 0.7 - seal.height))  # Avoid top 30% and bottom 30%
         seal.pos = (randint(*safe_area_x), randint(*safe_area_y))
     
     def hit_seal(self, instance, touch):
@@ -204,10 +204,10 @@ class HitTheSealApp(App):
     
     def play_again(self):
         #add delay 0.5 sec before change screeen
-        Clock.schedule_once(self.switch_to_game, 0.5)
+        Clock.schedule_once(self.switch_to_level_screen, 0.5)
 
-    def switch_to_game(self, dt):
-        self.root.current = 'game'
+    def switch_to_level_screen(self, dt):
+        self.root.current = 'choose_level'
 
     def back_to_main(self):
         #add delay 0.5 sec before go back to main 
