@@ -140,18 +140,14 @@
             size: self.size
             pos: self.pos
     FloatLayout:
-        Label:
-            text: "Game Screen"
-            font_size: 24
-            size_hint: 1, 0.2
-            color : 1, 0.89, 0.77, 1
-            pos_hint: {"center_x": 0.5, "center_y": 0.9}
         CustomButton:
             text: "Leave"
             size_hint: 0.3, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.4}
-            on_press: app.root.current = 'end'
-     
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            on_press: root.leave_game()
+
+<ScoreScreen>:       
+
 
 <EndScreen>:
     canvas.before:
@@ -160,6 +156,12 @@
             size: self.size
             pos: self.pos
     FloatLayout:
+        Label:
+            id: final_score_label
+            text: "Score: 0"
+            font_size: 36
+            size_hint: 1, 0.2
+            pos_hint: {"center_x": 0.5, "center_y": 0.9}
         CustomButton:
             background_normal: 'play_again_button.png'  
             background_down: 'play_again_button_pressed.png'  
