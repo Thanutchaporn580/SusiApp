@@ -41,15 +41,15 @@ class GameScreen(Screen):
         self.timer_label = Label(
             text = f"Time Left: {self.time_left} s",
             font_size = 24,
-            size_hint = (1, 0.2),
-            color = (1, 0.89, 0.77, 1) ,
-            pos_hint = {"center_x": 0.5, "center_y": 0.8},)
+            size_hint = (1, 0.3),
+            color = (0, 0, 0, 1) ,
+            pos_hint = {"center_x": 0.5, "center_y": 0.9},)
         self.score_label = Label(  # Add score label
             text = f"Score: {self.score}",
             font_size = 24,
-            size_hint = (1, 0.2),
+            size_hint = (1, 0.3),
             color = (1, 0.89, 0.77, 1),
-            pos_hint = {"center_x": 0.5, "center_y": 0.7},)
+            pos_hint = {"center_x": 0.5, "center_y": 0.8},)
         layout = FloatLayout()
         layout.add_widget(self.timer_label)
         layout.add_widget(self.score_label)  # Add score label to layout
@@ -93,16 +93,21 @@ class GameScreen(Screen):
             self.spawn_seal()
 
     def spawn_seal(self):
-        seal = Image(source='seal.png', size_hint=(0.3, 0.3))
-        seal.pos = (randint(0, int(self.width - seal.width)), randint(0, int(self.height - seal.height)))
+        seal = Image(source='seal.png', size_hint=(0.2, 0.2))
+    # Define the safe area for spawning seals
+        safe_area_x = (0, int(self.width - seal.width))
+        safe_area_y = (int(self.height * 0.3), int(self.height * 0.7))  # Avoid top 30% and bottom 30%
+        seal.pos = (randint(*safe_area_x), randint(*safe_area_y))
         seal.bind(on_touch_down=self.hit_seal)  # Bind touch event to hit_seal function
         self.seals.append(seal)
         self.add_widget(seal)
-        Clock.schedule_interval(partial(self.move_seal, seal), 4.0 / self.level)  # Increase the interval to slow down
+        Clock.schedule_interval(partial(self.move_seal, seal), 2.0 / self.level)  # Increase the interval to slow down
     
     def move_seal(self, seal, dt):
-        seal.pos = (randint(0, int(self.width - seal.width)), randint(0, int(self.height - seal.height)))
-
+        safe_area_x = (0, int(self.width - seal.width))
+        safe_area_y = (int(self.height * 0.4), int(self.height * 0.7))  # Avoid top 40% and bottom 30%
+        seal.pos = (randint(*safe_area_x), randint(*safe_area_y))
+    
     def hit_seal(self, instance, touch):
         if instance.collide_point(*touch.pos):
             self.score += 1  # Increase score
