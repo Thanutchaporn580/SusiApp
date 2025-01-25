@@ -113,7 +113,8 @@ class GameScreen(Screen):
         seal.bind(on_touch_down=self.hit_seal)  # Bind touch event to hit_seal function
         self.seals.append(seal)
         self.add_widget(seal)
-        Clock.schedule_interval(partial(self.move_seal, seal), 2.0 / self.level)  # Increase the interval to slow down
+        interval = 7.0 / self.level 
+        Clock.schedule_interval(partial(self.move_seal, seal), interval)
     
     def move_seal(self, seal, dt):
         safe_area_x = (int(self.width * 0.1), int(self.width * 0.9 - seal.width))
