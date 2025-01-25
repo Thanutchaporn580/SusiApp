@@ -7,6 +7,9 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.core.audio import SoundLoader
 from kivy.uix.button import Button
 from kivy.uix.popup import Popup
+from kivy.uix.image import Image
+from random import randint
+from functools import partial
 
 class MainScreen(Screen):
     def __init__(self, **kwargs):
@@ -34,22 +37,36 @@ class GameScreen(Screen):
         super().__init__(**kwargs)
         self.time_up_sound = SoundLoader.load('breaktime.mp3') 
         self.time_left = 30 
+        self.score = 0  # Add score variable
         self.timer_label = Label(
             text = f"Time Left: {self.time_left} s",
             font_size = 24,
             size_hint = (1, 0.2),
             color = (1, 0.89, 0.77, 1) ,
             pos_hint = {"center_x": 0.5, "center_y": 0.8},)
+        self.score_label = Label(  # Add score label
+            text = f"Score: {self.score}",
+            font_size = 24,
+            size_hint = (1, 0.2),
+            color = (1, 0.89, 0.77, 1),
+            pos_hint = {"center_x": 0.5, "center_y": 0.7},)
         layout = FloatLayout()
         layout.add_widget(self.timer_label)
+        layout.add_widget(self.score_label)  # Add score label to layout
         self.add_widget(layout)
+        self.seals = []
+        self.level = 1
 
     def on_enter(self):
         self.time_left = 30  #reset
         self.event = Clock.schedule_interval(self.update_timer, 1)  #update every 1 sec
+        self.start_game()
 
     def on_leave(self):
         Clock.unschedule(self.event)
+        for seal in self.seals:
+            self.remove_widget(seal)
+        self.seals.clear()
 
     def update_timer(self, dt):
         self.time_left -= 1
@@ -68,7 +85,33 @@ class GameScreen(Screen):
         Clock.schedule_once(self.switch_to_level_select, 0.5)
 
     def switch_to_level_up(self, dt):
-        self.root.current = 'level_select'
+        self.manager.current = 'level_select'
+
+    def start_game(self):
+        num_seals = self.level * 1  # Increase number of seals with level
+        for _ in range(num_seals):
+            self.spawn_seal()
+
+    def spawn_seal(self):
+        seal = Image(source='seal.png', size_hint=(0.3, 0.3))
+        seal.pos = (randint(0, int(self.width - seal.width)), randint(0, int(self.height - seal.height)))
+        seal.bind(on_touch_down=self.hit_seal)  # Bind touch event to hit_seal function
+        self.seals.append(seal)
+        self.add_widget(seal)
+        Clock.schedule_interval(partial(self.move_seal, seal), 4.0 / self.level)  # Increase the interval to slow down
+    
+    def move_seal(self, seal, dt):
+        seal.pos = (randint(0, int(self.width - seal.width)), randint(0, int(self.height - seal.height)))
+
+    def hit_seal(self, instance, touch):
+        if instance.collide_point(*touch.pos):
+            self.score += 1  # Increase score
+            self.score_label.text = f"Score: {self.score}"  # Update score label
+            self.remove_widget(instance)  # Remove seal from screen
+            self.seals.remove(instance)  # Remove seal from list
+            self.spawn_seal()  # Spawn a new seal
+            return True
+        return False
 
 class EndScreen(Screen):
     pass
