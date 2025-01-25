@@ -9,7 +9,19 @@ from kivy.uix.button import Button
 from kivy.uix.popup import Popup
 
 class MainScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.background_music = SoundLoader.load('mainbackground_music.mp3')
+        if self.background_music:
+            self.background_music.loop = True  
+
+    def on_enter(self):
+        if self.background_music:
+            self.background_music.play()  
+
+    def on_leave(self):
+        if self.background_music:
+            self.background_music.stop()
 
 class RulesGameScreen(Screen):
     pass
