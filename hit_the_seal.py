@@ -16,8 +16,9 @@ class MainScreen(Screen):
         super().__init__(**kwargs)
         self.background_music = SoundLoader.load('mainbackground_music.mp3')
         if self.background_music:
-            self.background_music.loop = True  
-
+            self.background_music.loop = False
+        self.background_music.bind(on_stop=self.play_music_again) # Bind on_stop event
+    
     def on_enter(self):
         if self.background_music:
             self.background_music.play()  
@@ -25,6 +26,10 @@ class MainScreen(Screen):
     def on_leave(self):
         if self.background_music:
             self.background_music.stop()
+
+    def play_music_again(self, instance):
+        if self.manager.current == 'main':  # Check if still on the main screen
+            self.background_music.play()
 
 class RulesGameScreen(Screen):
     pass
