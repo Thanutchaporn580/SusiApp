@@ -140,7 +140,7 @@ class CustomButton(Button):
         self.click_sound = SoundLoader.load('clicksound.mp3')
 
     def on_press(self):
-        if self.click_sound:  
+        if self.click_sound and App.get_running_app().effects_enabled:  
             self.click_sound.play()  # play sound when press
         return super().on_press()
 
@@ -163,12 +163,10 @@ class HitTheSealApp(App):
     def toggle_sound(self, button):
         self.sound_enabled = not self.sound_enabled
         if self.sound_enabled:
-        # Enable sound
             if self.root.current_screen.background_music:
                 self.root.current_screen.background_music.play()
             button.text = "ON"
         else:
-            # Disable sound
             if self.root.current_screen.background_music:
                 self.root.current_screen.background_music.stop()
             button.text = "OFF"
@@ -176,8 +174,15 @@ class HitTheSealApp(App):
 
     def toggle_effects(self, button):
         self.effects_enabled = not self.effects_enabled
+        if self.effects_enabled:
+            self.click_sound_enabled = True  # Enable click sound when effects are enabled
+            button.text = "ON"
+        else:
+            self.click_sound_enabled = False  # Disable click sound when effects are disabled
+            button.text = "OFF"
         button.text = "ON" if self.effects_enabled else "OFF"
         print(f"Effects enabled: {self.effects_enabled}")
+        print(f"Click sound enabled: {self.click_sound_enabled}")
 
     def show_settings_popup(self):
         popup_content = FloatLayout()
@@ -188,7 +193,7 @@ class HitTheSealApp(App):
             font_size=20,
         )
         effects_label = Label(
-            text="Music",
+            text="Effect",
             size_hint=(0.4, 0.1),
             pos_hint={"x": 0.1, "y": 0.4},
             font_size=20,
