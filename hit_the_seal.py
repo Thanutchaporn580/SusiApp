@@ -35,14 +35,29 @@ class RulesGameScreen(Screen):
     pass
 
 class LevelScreen(Screen):
-    pass
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.level_music = SoundLoader.load('select_level_music.mp3')
+        if self.level_music:
+            self.level_music.loop = True  # Enable looping
+
+    def on_enter(self):
+        if self.level_music and App.get_running_app().sound_enabled:
+            self.level_music.play()
+
+    def on_leave(self):
+        if self.level_music:
+            self.level_music.stop()
 
 class GameScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.time_up_sound = SoundLoader.load('breaktime.mp3') 
+        self.game_music = SoundLoader.load('retro_game.mp3')
+        if self.game_music:
+            self.game_music.loop = True  # Enable looping
         self.time_left = 30 
-        self.score = 0  # Add score variable
+        self.score = 0  
         self.timer_label = Label(
             text = f"Time Left: {self.time_left} s",
             font_size = 24,
@@ -66,12 +81,16 @@ class GameScreen(Screen):
         self.time_left = 30  #reset
         self.event = Clock.schedule_interval(self.update_timer, 1)  #update every 1 sec
         self.start_game()
+        if self.game_music and App.get_running_app().sound_enabled:
+            self.game_music.play() # play sound
 
     def on_leave(self):
         Clock.unschedule(self.event)
         for seal in self.seals:
             self.remove_widget(seal)
         self.seals.clear()
+        if self.game_music:
+            self.game_music.stop() # stop music when exit from this screen
 
     def leave_game(self):
         end_screen = self.manager.get_screen('end')
@@ -159,6 +178,12 @@ class HitTheSealApp(App):
         sm.add_widget(GameScreen(name='game'))
         sm.add_widget(EndScreen(name='end'))
         return sm
+    
+    def delayed_switch_to_rules(self, dt):
+        self.root.current = 'rules'
+
+    def delayed_exit(self, dt):
+        self.stop()
     
     def toggle_sound(self, button):
         self.sound_enabled = not self.sound_enabled
