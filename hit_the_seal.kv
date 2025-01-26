@@ -1,3 +1,4 @@
+#:import Clock kivy.clock.Clock
 <MainScreen>:
     canvas.before:
         Rectangle:
@@ -11,16 +12,23 @@
             size_hint: 1, 0.2
             color: 1, 0, 1, 1
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
+            bold: True
+        Image:
+            source: 'seal.png' 
+            size_hint: 0.3, 0.3
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
         CustomButton:
-            text: "Start Game"
-            size_hint: 0.3, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.2}
-            on_press: app.root.current = 'rules' 
+            background_normal: 'startgame.png'  
+            background_down: 'startgame_pressed.png'
+            size_hint: 0.3, 0.2
+            pos_hint: {"center_x": 0.8, "center_y": 0.2}
+            on_press: Clock.schedule_once(app.delayed_switch_to_rules, 0.5) 
         CustomButton:
-            text: "Quit"
-            size_hint: 0.2, 0.1
-            pos_hint: {"center_x": 0.5, "center_y": 0.1}
-            on_press: app.stop()  #callback for exit
+            background_normal: 'quit.png'  
+            background_down: 'quit_pressed.png'
+            size_hint: 0.3, 0.2
+            pos_hint: {"center_x": 0.2, "center_y": 0.2}
+            on_press: Clock.schedule_once(app.delayed_exit, 0.5)  #callback for exit
         CustomButton:
             background_normal: 'setting_button.png'  
             background_down: 'setting_button_pressed.png'  
